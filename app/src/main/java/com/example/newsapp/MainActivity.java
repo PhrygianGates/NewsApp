@@ -14,34 +14,61 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<News> newsList = new ArrayList<>(Arrays.asList(new News("飓风“艾达”即将登陆美国墨西哥湾沿岸_1", "2021-08-29 07:30:00", "https://static.cnbetacdn.com/thumb/article/2021/0829/0c7c5fafc146c34.jpg"),
-            new News("飓风“艾达”即将登陆美国墨西哥湾沿岸_2", "2021-08-29 07:30:00", "https://static.cnbetacdn.com/thumb/article/2021/0829/0c7c5fafc146c34.jpg")));
+    List<News> newsList = new ArrayList<>();
+    RecyclerView newsRecycleView;
+
+    private void refresh() {
+        Thread t = new Thread(() -> {
+            Request.Builder rb = new Request.Builder();
+            Request request = rb.url("https://api2.newsminer.net/svc/news/queryNewsList?size=15&startDate=2021-08-20&endDate=2021-08-30&words=拜登&categories=科技").build();
+            OkHttpClient client = new OkHttpClient();
+            try (Response response = client.newCall(request).execute()) {
+                String json = Objects.requireNonNull(response.body()).string();
+                Gson gson = new Gson();
+                NewsResponse newsResponse = gson.fromJson(json, NewsResponse.class);
+                if (newsResponse != null) {
+                    List<News> data = newsResponse.data;
+                    newsList.clear();
+                    newsList.addAll(data);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Objects.requireNonNull(newsRecycleView.getAdapter()).notifyDataSetChanged();
+                        }
+                    });
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        t.start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView newsRecycleView = findViewById(R.id.news_recycle_view);
+        newsRecycleView = findViewById(R.id.news_recycle_view);
         newsRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        newsRecycleView.setAdapter(new NewsAdaptor(newsList));
-
+        newsRecycleView.setAdapter(new NewsAdaptor());
+        refresh();
     }
 
     private class NewsAdaptor extends RecyclerView.Adapter<NewsViewHolder> {
-        List<News> newsList;
-
-        public NewsAdaptor(List<News> newsList) {
-            super();
-            this.newsList = newsList;
-        }
 
         @NonNull
         @Override
@@ -53,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
             News news = newsList.get(position);
             holder.title.setText(news.title);
-            holder.description.setText(news.description);
-            Glide.with(MainActivity.this).load(news.imageUrl).into(holder.image);
+            holder.description.setText(news.publishTime);
+            Glide.with(MainActivity.this).load(news.image).into(holder.image);
             holder.itemView.setOnClickListener(
                     view -> Toast.makeText(MainActivity.this, "hello!", Toast.LENGTH_SHORT).show()
             );
