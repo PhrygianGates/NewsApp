@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 NewsResponse newsResponse = gson.fromJson(json, NewsResponse.class);
                 if (newsResponse != null) {
+                    newsResponse.process();
                     List<News> data = newsResponse.data;
                     newsList.clear();
                     newsList.addAll(data);
@@ -80,11 +82,20 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
             News news = newsList.get(position);
             holder.title.setText(news.title);
-            holder.description.setText(news.publishTime);
-            Glide.with(MainActivity.this).load(news.image).into(holder.image);
-            holder.itemView.setOnClickListener(
-                    view -> Toast.makeText(MainActivity.this, "hello!", Toast.LENGTH_SHORT).show()
-            );
+            holder.description.setText(news.publisher);
+            if (news.images.get(0).isEmpty()) {
+                Glide.with(MainActivity.this).load("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fotowabi.com%2Fwp-content%2Fthemes%2Flionblog%2Fimg%2Fimg_no.gif&refer=http%3A%2F%2Fotowabi.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1633175286&t=2b3b38287bcd040f527a50ed1a589215").into(holder.image);
+            } else {
+                Glide.with(MainActivity.this).load(news.images.get(0)).into(holder.image);
+            }
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                    intent.putExtra("url=", news.url);
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override

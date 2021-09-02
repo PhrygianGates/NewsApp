@@ -1,18 +1,21 @@
 package com.example.newsapp;
 
+import java.util.Arrays;
 import java.util.List;
 
 class News {
     String title;
-    String publishTime;
+    String publisher;
     String image;
     String url;
-
-    public News(String title, String publishTime, String image, String url) {
-        this.title = title;
-        this.publishTime = publishTime;
-        this.image = image;
-        this.url = url;
+    List<String> images;
+    public void process() {
+        image = image.substring(1, image.length() - 1);
+        if (image == "") {
+            images.add("");
+            return;
+        }
+        images = Arrays.asList(image.split(", "));
     }
 }
 
@@ -21,4 +24,9 @@ class NewsResponse {
     int total;
     List<News> data;
     int currentPage;
+    public void process() {
+        for (News news : data) {
+            news.process();
+        }
+    }
 }
