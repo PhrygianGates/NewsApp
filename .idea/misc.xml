@@ -5,8 +5,11 @@
       <map>
         <entry key="..\:/Sophomore/programming_and_training/NewsApp/app/src/main/res/layout/activity_detail.xml" value="0.25364583333333335" />
         <entry key="..\:/Sophomore/programming_and_training/NewsApp/app/src/main/res/layout/activity_main.xml" value="0.23722627737226276" />
+        <entry key="..\:/Sophomore/programming_and_training/NewsApp/app/src/main/res/layout/fragment_home.xml" value="0.25364583333333335" />
         <entry key="..\:/Sophomore/programming_and_training/NewsApp/app/src/main/res/layout/fragment_news.xml" value="0.25364583333333335" />
+        <entry key="..\:/Sophomore/programming_and_training/NewsApp/app/src/main/res/layout/fragment_test.xml" value="0.25364583333333335" />
         <entry key="..\:/Sophomore/programming_and_training/NewsApp/app/src/main/res/layout/news_item_one_image.xml" value="0.25364583333333335" />
+        <entry key="..\:/Sophomore/programming_and_training/NewsApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25364583333333335" />
         <entry key="..\:/Sophomore/programming_and_training/NewsApp/app/src/main/res/xml/network_security_config.xml" value="0.25364583333333335" />
       </map>
     </option>
