@@ -21,6 +21,11 @@
         app:menu="@menu/bottom_nav_menu"
         android:layout_height="50dp">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#F8F8F8"/>
+
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </RelativeLayout>
