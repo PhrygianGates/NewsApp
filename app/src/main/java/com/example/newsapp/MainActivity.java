@@ -1,24 +1,33 @@
 package com.example.newsapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,89 +37,48 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<News> newsList = new ArrayList<>();
-    RecyclerView newsRecycleView;
-
-    private void refresh() {
-        Thread t = new Thread(() -> {
-            Request.Builder rb = new Request.Builder();
-            Request request = rb.url("https://api2.newsminer.net/svc/news/queryNewsList?size=15&startDate=2021-08-20&endDate=2021-08-30&words=拜登&categories=科技").build();
-            OkHttpClient client = new OkHttpClient();
-            try (Response response = client.newCall(request).execute()) {
-                String json = Objects.requireNonNull(response.body()).string();
-                Gson gson = new Gson();
-                NewsResponse newsResponse = gson.fromJson(json, NewsResponse.class);
-                if (newsResponse != null) {
-                    newsResponse.process();
-                    List<News> data = newsResponse.data;
-                    newsList.clear();
-                    newsList.addAll(data);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Objects.requireNonNull(newsRecycleView.getAdapter()).notifyDataSetChanged();
-                        }
-                    });
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        t.start();
-    }
+    //娱乐、军事、教育、文化、健康、财经、体育、汽车、科技、社会
+    List<String> newsTypeList = new ArrayList<>(Arrays.asList("娱乐", "军事", "财经", "科技"));
+    List<NewsFragment> fragmentList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        newsRecycleView = findViewById(R.id.news_recycle_view);
-        newsRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        newsRecycleView.setAdapter(new NewsAdaptor());
-        refresh();
+        TabLayout tabLayout = findViewById(R.id.news_tab_layout);
+        ViewPager viewPager = findViewById(R.id.news_view_pager);
+        for (String newsType : newsTypeList) {
+            fragmentList.add(new NewsFragment(newsType));
+        }
+        viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    private class NewsAdaptor extends RecyclerView.Adapter<NewsViewHolder> {
+    private class MyAdapter extends FragmentPagerAdapter {
+
+        public MyAdapter(@NonNull FragmentManager fm) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        }
 
         @NonNull
         @Override
-        public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new NewsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_one_image, parent, false));
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-            News news = newsList.get(position);
-            holder.title.setText(news.title);
-            holder.description.setText(news.publisher);
-            if (news.images.get(0).isEmpty()) {
-                Glide.with(MainActivity.this).load("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fotowabi.com%2Fwp-content%2Fthemes%2Flionblog%2Fimg%2Fimg_no.gif&refer=http%3A%2F%2Fotowabi.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1633175286&t=2b3b38287bcd040f527a50ed1a589215").into(holder.image);
-            } else {
-                Glide.with(MainActivity.this).load(news.images.get(0)).into(holder.image);
-            }
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                    intent.putExtra("url=", news.url);
-                    startActivity(intent);
-                }
-            });
+        public int getCount() {
+            return fragmentList.size();
         }
 
+        @Nullable
         @Override
-        public int getItemCount() {
-            return newsList.size();
+        public CharSequence getPageTitle(int position) {
+            return newsTypeList.get(position);
         }
     }
 
-    private class NewsViewHolder extends RecyclerView.ViewHolder {
-        TextView title = itemView.findViewById(R.id.news_title);
-        TextView description = itemView.findViewById(R.id.news_description);
-        ImageView image = itemView.findViewById(R.id.news_image);
 
-        public NewsViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
+
 }
