@@ -1,9 +1,12 @@
 package com.example.newsapp;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.util.Arrays;
 import java.util.List;
 
-class News {
+class News extends LitePalSupport {
+    String newsID;
     String title;
     String publisher;
     String publishTime;

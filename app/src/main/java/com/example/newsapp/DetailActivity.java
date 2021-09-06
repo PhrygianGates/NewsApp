@@ -53,6 +53,7 @@ public class DetailActivity extends AppCompatActivity {
             imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             Glide.with(MyApplication.context).load(images.get(i)).into(imageView);
             imageView.setAdjustViewBounds(true);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             llGroup.addView(imageView);
         }
     }
