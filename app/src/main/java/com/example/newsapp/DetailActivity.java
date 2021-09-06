@@ -2,13 +2,22 @@ package com.example.newsapp;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
@@ -17,18 +26,34 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        WebView webView = findViewById(R.id.news_web_view);
-        String url = getIntent().getStringExtra("url=");
-        if (url != null) {
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.loadUrl(url);
-            webView.setWebViewClient(new WebViewClient(){
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    view.loadUrl(url);
-                    return super.shouldOverrideUrlLoading(view, url);
-                }
-            });
+        TextView textViewContent = findViewById(R.id.content);
+        TextView textViewTitle = findViewById(R.id.title);
+        TextView textViewPublishTime = findViewById(R.id.publishTime);
+        TextView textViewPublisher = findViewById(R.id.publisher);
+        String content = getIntent().getStringExtra("content=");
+        String title = getIntent().getStringExtra("title=");
+        String publishTime = getIntent().getStringExtra("publishTime=");
+        String publisher = getIntent().getStringExtra("publisher=");
+        textViewContent.setText(content);
+        textViewTitle.setText(title);
+        textViewPublishTime.setText(publishTime);
+        textViewPublisher.setText(publisher);
+
+        LinearLayout llGroup = (LinearLayout) findViewById(R.id.ll_group);
+        String image = getIntent().getStringExtra("image=");
+        List<String> images;
+        if (image == "") {
+            images = new ArrayList<>();
+        } else {
+            images = Arrays.asList(image.split(", "));
+        }
+        llGroup.removeAllViews();  //clear linearlayout
+        for (int i = 0; i < images.size(); i++) {
+            ImageView imageView = new ImageView(this);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            Glide.with(MyApplication.context).load(images.get(i)).into(imageView);
+            imageView.setAdjustViewBounds(true);
+            llGroup.addView(imageView);
         }
     }
 

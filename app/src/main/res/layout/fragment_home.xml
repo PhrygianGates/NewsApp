@@ -39,14 +39,14 @@
                         android:src="@drawable/ic_search"
                         android:layout_centerVertical="true">
                     </ImageView>
+
                     <EditText
                         android:id="@+id/home_edit_text"
-                        android:layout_toRightOf="@id/icon_search"
-                        android:layout_centerVertical="true"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:background="#F4F4F4">
-                    </EditText>
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/icon_search"
+                        android:background="#F4F4F4"></EditText>
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>

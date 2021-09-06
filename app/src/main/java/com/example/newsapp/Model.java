@@ -6,8 +6,10 @@ import java.util.List;
 class News {
     String title;
     String publisher;
+    String publishTime;
     String image;
-    String url;
+    String content;
+
     List<String> images;
     public void process() {
         image = image.substring(1, image.length() - 1);
