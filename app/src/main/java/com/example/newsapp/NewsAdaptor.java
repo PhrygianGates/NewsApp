@@ -78,6 +78,8 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
                     intent.putExtra("publisher=", currentNews.publisher);
                     intent.putExtra("image=", currentNews.image);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    HistoryLog log = new HistoryLog(news.id);
+                    log.save();
                     startActivity(MyApplication.context, intent, null);
                 }
             });

@@ -37,3 +37,11 @@ class NewsResponse {
         }
     }
 }
+
+class HistoryLog extends LitePalSupport {
+    long id;
+    long historyID;
+    public HistoryLog(long historyID) {
+        this.historyID = historyID;
+    }
+}
