@@ -6,12 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 
 class News extends LitePalSupport {
+    long id;
     String newsID;
     String title;
     String publisher;
     String publishTime;
     String image;
     String content;
+    String category;
 
     List<String> images;
     public void process() {

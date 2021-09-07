@@ -28,12 +28,13 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
     List<News> newsList;
     NewsFragment newsFragment;
 
-    int footerViewStatus = HAS_MORE;
+    int footerViewStatus;
 
     public NewsAdaptor(List<News> newsList, NewsFragment newsFragment) {
         super();
         this.newsList = newsList;
         this.newsFragment = newsFragment;
+        footerViewStatus = HAS_MORE;
     }
 
     @NonNull
@@ -63,8 +64,8 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
                 Glide.with(MyApplication.context).load(news.images.get(0)).into(((OneImageViewHolder) holder).image);
             } else if (holder instanceof ThreeImagesViewHolder) {
                 Glide.with(MyApplication.context).load(news.images.get(0)).into(((ThreeImagesViewHolder) holder).image1);
-                Glide.with(MyApplication.context).load(news.images.get(2)).into(((ThreeImagesViewHolder) holder).image2);
-                Glide.with(MyApplication.context).load(news.images.get(3)).into(((ThreeImagesViewHolder) holder).image3);
+                Glide.with(MyApplication.context).load(news.images.get(1)).into(((ThreeImagesViewHolder) holder).image2);
+                Glide.with(MyApplication.context).load(news.images.get(2)).into(((ThreeImagesViewHolder) holder).image3);
             }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,6 +77,7 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
                     intent.putExtra("publishTime=", currentNews.publishTime);
                     intent.putExtra("publisher=", currentNews.publisher);
                     intent.putExtra("image=", currentNews.image);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(MyApplication.context, intent, null);
                 }
             });
@@ -131,38 +133,46 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
     }
 
     class NewsViewHolder extends BaseViewHolder {
-        TextView title = itemView.findViewById(R.id.news_title);
-        TextView description = itemView.findViewById(R.id.news_desc);
+        TextView title;
+        TextView description;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.news_title);
+            description = itemView.findViewById(R.id.news_description);
         }
     }
 
     class FooterViewHolder extends BaseViewHolder {
-        ProgressBar progressBar = itemView.findViewById(R.id.progress_bar);
-        TextView message = itemView.findViewById(R.id.message);
+        ProgressBar progressBar;
+        TextView message;
 
         public FooterViewHolder(@NonNull View itemView) {
             super(itemView);
+            progressBar = itemView.findViewById(R.id.progress_bar);
+            message = itemView.findViewById(R.id.message);
         }
     }
 
     class OneImageViewHolder extends NewsViewHolder {
-        ImageView image = itemView.findViewById(R.id.news_image);
+        ImageView image;
 
         public OneImageViewHolder(@NonNull View itemView) {
             super(itemView);
+            image = itemView.findViewById(R.id.news_image);
         }
     }
 
     class ThreeImagesViewHolder extends NewsViewHolder {
-        ImageView image1 = itemView.findViewById(R.id.news_image_1);
-        ImageView image2 = itemView.findViewById(R.id.news_image_2);
-        ImageView image3 = itemView.findViewById(R.id.news_image_3);
+        ImageView image1;
+        ImageView image2;
+        ImageView image3;
 
         public ThreeImagesViewHolder(@NonNull View itemView) {
             super(itemView);
+            image1 = itemView.findViewById(R.id.news_image_1);
+            image2 = itemView.findViewById(R.id.news_image_2);
+            image3 = itemView.findViewById(R.id.news_image_3);
         }
     }
 }

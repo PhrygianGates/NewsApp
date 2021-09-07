@@ -28,7 +28,6 @@
             android:layout_marginTop="-3dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="习近平与人民在一起的春节暖心瞬间习近平与人民在一起的春节暖心瞬间"
             android:textColor="#222222"
             android:textSize="18sp" />
 
@@ -64,13 +63,12 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/news_desc"
+            android:id="@+id/news_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="新华社全媒报道平台  5901评新华社全媒报道平台  5901评"
             android:textColor="#BFBFBF"
             android:textSize="10sp"
             tools:ignore="SmallSp" />

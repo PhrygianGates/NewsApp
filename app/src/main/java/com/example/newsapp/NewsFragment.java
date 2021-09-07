@@ -4,6 +4,7 @@ import static com.example.newsapp.NewsAdaptor.FAILED;
 import static com.example.newsapp.NewsAdaptor.FINISHED;
 import static com.example.newsapp.NewsAdaptor.HAS_MORE;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,9 +20,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 
+import org.litepal.LitePal;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,7 +75,7 @@ public class NewsFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                refresh();
+                                loadNewData();
                                 swipeRefreshLayout.setRefreshing(false);
                             }
                         });
@@ -101,7 +103,7 @@ public class NewsFragment extends Fragment {
         if (isLoading) return;
         isLoading = true;
         if (NetworkUtil.isNetworkAvailable(MyApplication.context)) {
-            writeLog();
+            //writeLog();
             Runnable r = new Runnable() {
                 @Override
                 public void run() {
@@ -124,7 +126,7 @@ public class NewsFragment extends Fragment {
                             }
                         });
                     } else {
-                        List<News> dataFromDatabase = getDataFromDatabase(6);
+                        List<News> dataFromDatabase = getDataFromDatabase(6, -1);
                         requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -139,7 +141,7 @@ public class NewsFragment extends Fragment {
             Thread t = new Thread(r);
             t.start();
         } else {
-            List<News> dataFromDatabase = getDataFromDatabase(6);
+            List<News> dataFromDatabase = getDataFromDatabase(6, -1);
             requireActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -160,13 +162,13 @@ public class NewsFragment extends Fragment {
             public void run() {
                 try {
                     Thread.sleep(1000);
-                    List<News> newData = getDataFromDatabase(6, minIdInNewsList() - 1);
+                    List<News> newData = getDataFromDatabase(6, minIDInNewsList() - 1);
                     if (newData.isEmpty()) {
                         newsAdaptor.footerViewStatus = FINISHED;
                         requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                newsAdaptor.notifyItemChanged(newsAdaptor.itemCount - 1);
+                                newsAdaptor.notifyItemChanged(newsAdaptor.getItemCount() - 1);
                                 isLoading = false;
                             }
                         });
@@ -227,5 +229,63 @@ public class NewsFragment extends Fragment {
         return list;
     }
 
+    private List<News> getDataFromDatabase(int limitCount, long maxID) {
+        if (maxID < 0) {
+            return LitePal.where("category=?", category)
+                    .order("id desc")
+                    .limit(limitCount)
+                    .find(News.class);
+        } else {
+            return LitePal.where("category=? and id<=?", category, Long.toString(maxID))
+                    .order("id desc")
+                    .limit(limitCount)
+                    .find(News.class);
+        }
+    }
+
+    private long minIDInNewsList() {
+        if (newsList == null || newsList.isEmpty()) {
+            return -1;
+        } else {
+            long minID = newsList.get(0).id;
+            for (int i = 1; i < newsList.size(); i++) {
+                long ID = newsList.get(i).id;
+                if (ID < minID) {
+                    minID = ID;
+                }
+            }
+            return minID;
+        }
+    }
+
+    private void insertNewsToDataBase() {
+        try {
+            for (int i = newsList.size() - 1; i >= 0; i--) {
+                News news = newsList.get(i);
+                List<News> resultList = LitePal.where("title=?", news.title).find(News.class);
+                if (resultList == null || resultList.isEmpty()) {
+                    news.save();
+                } else {
+                    news.id = resultList.get(0).id;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            requireActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {}
+            });
+        }
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    private void replaceDataInRecyclerView(List<News> newData) {
+        try {
+            newsList.clear();;
+            newsList.addAll(newData);
+            newsAdaptor.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

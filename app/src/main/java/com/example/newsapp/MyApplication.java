@@ -3,7 +3,9 @@ package com.example.newsapp;
 import android.app.Application;
 import android.content.Context;
 
-public class MyApplication extends Application {
+import org.litepal.LitePalApplication;
+
+public class MyApplication extends LitePalApplication {
     static Context context;
 
     @Override

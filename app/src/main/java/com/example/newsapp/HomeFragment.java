@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
             fragmentList.add(new NewsFragment(newsType));
         }
         viewPager.setOffscreenPageLimit(newsTypeList.size());
-        viewPager.setAdapter(new MyAdapter(requireActivity().getSupportFragmentManager()));
+        viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
 
         editText.setKeyListener(null);
