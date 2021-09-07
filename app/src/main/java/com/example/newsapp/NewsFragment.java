@@ -203,7 +203,7 @@ public class NewsFragment extends Fragment {
 
     private List<News> getDataFromNetwork() {
         List<News> list = null;
-        Request request = (new Request.Builder()).url("https://api2.newsminer.net/svc/news/queryNewsList?size=15&startDate=2021-01-01&endDate=2021-08-31&words=&categories=" + category).build();
+        Request request = (new Request.Builder()).url("https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=&endDate=2021-09-07&words=&categories=" + category).build();
         try {
             Response response = (new OkHttpClient()).newCall(request).execute();
             String json = Objects.requireNonNull(response.body()).string();
