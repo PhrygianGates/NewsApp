@@ -1,5 +1,6 @@
 package com.example.newsapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +28,12 @@ public class DisplayActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<News> newsList;
     MyAdaptor myAdaptor;
+    String startTime;
+    String endTime;
+    String category;
+    String word;
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,34 +42,43 @@ public class DisplayActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.news_recycle_view);
         newsList = new ArrayList<>();
 
-        String startTime = getIntent().getStringExtra("startTime=");
-        String endTime = getIntent().getStringExtra("endTime=");
-        String category = getIntent().getStringExtra("category=");
-        String word = getIntent().getStringExtra("word=");
+        startTime = getIntent().getStringExtra("startTime=");
+        endTime = getIntent().getStringExtra("endTime=");
+        category = getIntent().getStringExtra("category=");
+        word = getIntent().getStringExtra("word=");
 
-        System.out.println("here!");
-        Request request = (new Request.Builder()).url("https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=" + startTime + "&endDate="
-                + endTime + "&words=" + word + "&categories=" + category).build();
-        try {
-            Response response = (new OkHttpClient()).newCall(request).execute();
-            String json = Objects.requireNonNull(response.body()).string();
-            NewsResponse newsResponse = (new Gson()).fromJson(json, NewsResponse.class);
-            if (newsResponse != null) {
-                try {
-                    newsResponse.process();
-                    newsList.clear();
-                    newsList.addAll(newsResponse.data);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        Thread t = new Thread(() -> {
+            System.out.println("here!");
+            Request request = (new Request.Builder()).url("https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=" + startTime + "&endDate="
+                    + endTime + "&words=" + word + "&categories=" + category).build();
+            try {
+                Response response = (new OkHttpClient()).newCall(request).execute();
+                String json = Objects.requireNonNull(response.body()).string();
+                NewsResponse newsResponse = (new Gson()).fromJson(json, NewsResponse.class);
+                if (newsResponse != null) {
+                    try {
+                        newsResponse.process();
+                        newsList.clear();
+                        newsList.addAll(newsResponse.data);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                myAdaptor.notifyDataSetChanged();
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        });
+        t.start();
 
         myAdaptor = new MyAdaptor(newsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(MyApplication.context));
         recyclerView.setAdapter(myAdaptor);
     }
 }
+

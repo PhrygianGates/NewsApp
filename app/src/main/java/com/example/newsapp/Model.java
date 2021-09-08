@@ -2,6 +2,7 @@ package com.example.newsapp;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,6 +18,12 @@ class News extends LitePalSupport {
 
     List<String> images;
     public void process() {
+        images = new ArrayList<>();
+        if (image.length() <= 2) {
+            image = "";
+            images.add("https://th.bing.com/th/id/OIP.F0l-uBZ7P7BSiifS_ZIRRQAAAA?pid=ImgDet&rs=1");
+            return;
+        }
         image = image.substring(1, image.length() - 1);
         if (image == "") {
             images.add("https://th.bing.com/th/id/OIP.F0l-uBZ7P7BSiifS_ZIRRQAAAA?pid=ImgDet&rs=1");
