@@ -22,11 +22,11 @@
                 <TextView
                     android:id="@+id/start_time"
                     android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_height="15dp"
+                    android:layout_centerVertical="true"
                     android:paddingRight="10dp"
-                    android:text="起始时间">
-                </TextView>
+                    android:text="起始时间"
+                    android:textSize="12sp"></TextView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_toRightOf="@id/start_time"
@@ -93,11 +93,11 @@
                 <TextView
                     android:id="@+id/end_time"
                     android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_height="15dp"
+                    android:layout_centerVertical="true"
                     android:paddingRight="10dp"
-                    android:text="结束时间">
-                </TextView>
+                    android:text="结束时间"
+                    android:textSize="12sp"></TextView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_toRightOf="@id/end_time"
@@ -164,11 +164,11 @@
                 <TextView
                     android:id="@+id/category"
                     android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_height="15dp"
+                    android:layout_centerVertical="true"
                     android:paddingRight="10dp"
-                    android:text="新闻类别">
-                </TextView>
+                    android:text="新闻类别"
+                    android:textSize="12sp"></TextView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_toRightOf="@id/category"
@@ -235,11 +235,11 @@
                 <TextView
                     android:id="@+id/word"
                     android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_height="15dp"
+                    android:layout_centerVertical="true"
                     android:paddingRight="10dp"
-                    android:text="关键词语">
-                </TextView>
+                    android:text="关键词语"
+                    android:textSize="12sp"></TextView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_toRightOf="@id/word"

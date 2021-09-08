@@ -34,7 +34,6 @@ public class HistoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LitePal.deleteAll(HistoryLog.class);
         View view = inflater.inflate(R.layout.fragment_history, container, false);
         recyclerView = view.findViewById(R.id.history_recycler_view);
         swipeRefreshLayout = view.findViewById(R.id.history_refresh);
@@ -46,7 +45,7 @@ public class HistoryFragment extends Fragment {
                 newsList.add(thisNews.get(0));
             }
         }
-        myAdaptor = new MyAdaptor();
+        myAdaptor = new MyAdaptor(newsList);
         return view;
     }
 
@@ -58,8 +57,8 @@ public class HistoryFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                newsList = new ArrayList<>();
                 List<HistoryLog> historyList = LitePal.order("id desc").find(HistoryLog.class);
+                newsList.clear();
                 for (HistoryLog historyLog : historyList) {
                     List<News> thisNews = LitePal.where("id=?", String.valueOf(historyLog.historyID)).find(News.class);
                     if (thisNews != null && !thisNews.isEmpty() && !newsList.contains(thisNews.get(0))) {
@@ -72,55 +71,6 @@ public class HistoryFragment extends Fragment {
         });
     }
 
-    class MyAdaptor extends RecyclerView.Adapter<MyViewHolder> {
 
-        @NonNull
-        @Override
-        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_one_image, parent, false);
-            return new MyViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            News news = newsList.get(position);
-            holder.title.setText(news.title);
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(news.publisher).append("    ").append(news.publishTime);
-            holder.description.setText(stringBuilder.toString());
-            Glide.with(MyApplication.context).load(news.images.get(0)).into(holder.image);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(MyApplication.context, DetailActivity.class);
-                    News currentNews = newsList.get(holder.getAdapterPosition());
-                    intent.putExtra("content=", currentNews.content);
-                    intent.putExtra("title=", currentNews.title);
-                    intent.putExtra("publishTime=", currentNews.publishTime);
-                    intent.putExtra("publisher=", currentNews.publisher);
-                    intent.putExtra("image=", currentNews.image);
-                    startActivity(intent);
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return newsList.size();
-        }
-    }
-
-    class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView description;
-        ImageView image;
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.news_title);
-            description = itemView.findViewById(R.id.news_description);
-            image = itemView.findViewById(R.id.news_image);
-        }
-    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.newsapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -21,13 +22,14 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        TextView CancelButton = findViewById(R.id.cancel_button);
+        TextView cancelButton = findViewById(R.id.cancel_button);
+        TextView searchButton = findViewById(R.id.search_button);
         EditText startTimeEditText = findViewById(R.id.start_time_edit_text);
         EditText endTimeEditText = findViewById(R.id.end_time_edit_text);
         EditText categoryEditText = findViewById(R.id.category_edit_text);
         EditText wordEditText = findViewById(R.id.word_edit_text);
 
-        CancelButton.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -81,5 +83,17 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyApplication.context, DisplayActivity.class);
+                intent.putExtra("startTime=", startTime);
+                intent.putExtra("endTime=", endTime);
+                intent.putExtra("category=", category);
+                intent.putExtra("word=", word);
+                startActivity(intent);
+            }
+        });
+
     }
 }
