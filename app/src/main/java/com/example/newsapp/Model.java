@@ -19,7 +19,7 @@ class News extends LitePalSupport {
     public void process() {
         image = image.substring(1, image.length() - 1);
         if (image == "") {
-            images.add("");
+            images.add("https://th.bing.com/th/id/OIP.F0l-uBZ7P7BSiifS_ZIRRQAAAA?pid=ImgDet&rs=1");
             return;
         }
         images = Arrays.asList(image.split(", "));

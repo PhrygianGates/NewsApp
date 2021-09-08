@@ -39,7 +39,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Fragment> fragmentList = new ArrayList<>(Arrays.asList(new HomeFragment(), new TestFragment("test1"), new TestFragment("test2")));
+    List<Fragment> fragmentList = new ArrayList<>(Arrays.asList(new HomeFragment(), new HistoryFragment(), new TestFragment("test1")));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
