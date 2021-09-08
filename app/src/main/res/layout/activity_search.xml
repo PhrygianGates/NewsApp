@@ -12,23 +12,28 @@
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="50dp"
             android:background="#FFFFFF">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <!--android:layout_centerVertical="true"        相对于父布局中垂直方向居中-->
-                <!--android:layout_marginRight="10dp"           右边的外边距设置为 10 dp-->
-                <!--android:layout_toLeftOf="@+id/search_cancel_button" 让搜索框处于TextView(即"取消")的左边-->
+                <TextView
+                    android:id="@+id/start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_height="15dp"
+                    android:paddingRight="10dp"
+                    android:text="起始时间">
+                </TextView>
 
                 <androidx.cardview.widget.CardView
+                    android:layout_toRightOf="@id/start_time"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/search_cancel_button"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="0dp">
 
@@ -39,57 +44,273 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp">
 
+
                         <ImageView
-                            android:id="@+id/icon_search"
+                            android:id="@+id/start_time_icon_search"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_search" />
 
-                        <!--android:layout_centerVertical="true"            相对于父布局中垂直方向居中-->
-                        <!--android:layout_toRightOf="@+id/icon_search"      设置编辑框的位置为放大镜图标的右边-->
-                        <!--android:cursorVisible="true"                    设置光标可见-->
-                        <!--android:textCursorDrawable="@drawable/text_cursor_drawable" 设置光标的形状-->
-                        <!--android:imeOptions="actionSearch"               将回车键变成搜索键-->
-                        <!--android:singleLine="true"                       只允许输入单行文本-->
                         <EditText
-                            android:id="@+id/home_edit_text"
+                            android:id="@+id/start_time_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/icon_search"
+                            android:layout_toRightOf="@+id/start_time_icon_search"
                             android:background="#F4F4F4"
                             android:cursorVisible="true"
                             android:imeOptions="actionSearch"
                             android:singleLine="true"
                             android:textCursorDrawable="@drawable/text_cursor_drawable">
-
                         </EditText>
+
 
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
 
-                <!--android:layout_alignParentRight="true"  与父布局的右边对齐  -->
-                <!--android:layout_centerVertical="true"    相对于父布局中垂直方向居中  -->
-                <!--android:layout_marginRight="10dp"       右边距-->
-                <!--android:gravity="center"                让TextView里面的文字处于TextView的正中心-->
-                <TextView
-                    android:id="@+id/search_cancel_button"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center"
-                    android:text="取消" />
-
-
             </RelativeLayout>
-
 
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#FFFFFF">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_height="15dp"
+                    android:paddingRight="10dp"
+                    android:text="结束时间">
+                </TextView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_toRightOf="@id/end_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#F4F4F4"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+
+                        <ImageView
+                            android:id="@+id/end_time_icon_search"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_search" />
+
+                        <EditText
+                            android:id="@+id/end_time_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/end_time_icon_search"
+                            android:background="#F4F4F4"
+                            android:cursorVisible="true"
+                            android:imeOptions="actionSearch"
+                            android:singleLine="true"
+                            android:textCursorDrawable="@drawable/text_cursor_drawable">
+                        </EditText>
+
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#FFFFFF">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_height="15dp"
+                    android:paddingRight="10dp"
+                    android:text="新闻类别">
+                </TextView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_toRightOf="@id/category"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#F4F4F4"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+
+                        <ImageView
+                            android:id="@+id/category_icon_search"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_search" />
+
+                        <EditText
+                            android:id="@+id/category_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/category_icon_search"
+                            android:background="#F4F4F4"
+                            android:cursorVisible="true"
+                            android:imeOptions="actionSearch"
+                            android:singleLine="true"
+                            android:textCursorDrawable="@drawable/text_cursor_drawable">
+                        </EditText>
+
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#FFFFFF">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/word"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_height="15dp"
+                    android:paddingRight="10dp"
+                    android:text="关键词语">
+                </TextView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_toRightOf="@id/word"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#F4F4F4"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+
+                        <ImageView
+                            android:id="@+id/word_icon_search"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_search" />
+
+                        <EditText
+                            android:id="@+id/word_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/word_icon_search"
+                            android:background="#F4F4F4"
+                            android:cursorVisible="true"
+                            android:imeOptions="actionSearch"
+                            android:singleLine="true"
+                            android:textCursorDrawable="@drawable/text_cursor_drawable">
+                        </EditText>
+
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="搜索" />
+
+        <TextView
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="取消" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

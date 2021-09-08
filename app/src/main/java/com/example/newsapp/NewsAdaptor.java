@@ -3,6 +3,7 @@ package com.example.newsapp;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import org.litepal.LitePal;
 
 import java.util.List;
 
@@ -57,6 +60,11 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
         if (holder instanceof NewsViewHolder) {
             News news = newsList.get(position);
             ((NewsViewHolder) holder).title.setText(news.title);
+            if (!LitePal.where("historyID=?", String.valueOf(news.id)).find(HistoryLog.class).isEmpty()) {
+                ((NewsViewHolder) holder).title.setTextColor(Color.GRAY);
+            } else {
+                ((NewsViewHolder) holder).title.setTextColor(Color.BLACK);
+            }
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(news.publisher).append("    ").append(news.publishTime);
             ((NewsViewHolder) holder).description.setText(stringBuilder.toString());
@@ -78,8 +86,11 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
                     intent.putExtra("publisher=", currentNews.publisher);
                     intent.putExtra("image=", currentNews.image);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    HistoryLog log = new HistoryLog(news.id);
-                    log.save();
+                    if (LitePal.where("historyID=?", String.valueOf(news.id)).find(HistoryLog.class).isEmpty()) {
+                        HistoryLog log = new HistoryLog(news.id);
+                        log.save();
+                        ((NewsViewHolder) holder).title.setTextColor(Color.GRAY);
+                    }
                     startActivity(MyApplication.context, intent, null);
                 }
             });
