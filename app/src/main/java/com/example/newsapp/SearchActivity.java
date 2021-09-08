@@ -39,7 +39,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH) {
-                    startTime = String.valueOf(startTimeEditText.getText());
                     System.out.println(startTimeEditText.getText());
                     return true;
                 } else {
@@ -51,7 +50,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH) {
-                    endTime = String.valueOf(endTimeEditText.getText());
                     System.out.println(endTimeEditText.getText());
                     return true;
                 } else {
@@ -63,7 +61,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH) {
-                    category = String.valueOf(categoryEditText.getText());
                     System.out.println(categoryEditText.getText());
                     return true;
                 } else {
@@ -75,7 +72,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH) {
-                    word = String.valueOf(wordEditText.getText());
                     System.out.println(wordEditText.getText());
                     return true;
                 } else {
@@ -86,6 +82,11 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startTime = String.valueOf(startTimeEditText.getText());
+                endTime = String.valueOf(endTimeEditText.getText());
+                category = String.valueOf(categoryEditText.getText());
+                word = String.valueOf(wordEditText.getText());
+
                 Intent intent = new Intent(MyApplication.context, DisplayActivity.class);
                 intent.putExtra("startTime=", startTime);
                 intent.putExtra("endTime=", endTime);

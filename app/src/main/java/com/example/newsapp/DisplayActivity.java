@@ -41,37 +41,29 @@ public class DisplayActivity extends AppCompatActivity {
         String category = getIntent().getStringExtra("category=");
         String word = getIntent().getStringExtra("word=");
 
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                Request request = (new Request.Builder()).url("https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=" + startTime + "&endDate="
-                        + endTime + "&words=" + word + "&categories=" + category).build();
+        System.out.println("here!");
+        Request request = (new Request.Builder()).url("https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=" + startTime + "&endDate="
+                + endTime + "&words=" + word + "&categories=" + category).build();
+        try {
+            Response response = (new OkHttpClient()).newCall(request).execute();
+            String json = Objects.requireNonNull(response.body()).string();
+            NewsResponse newsResponse = (new Gson()).fromJson(json, NewsResponse.class);
+            if (newsResponse != null) {
                 try {
-                    Response response = (new OkHttpClient()).newCall(request).execute();
-                    String json = Objects.requireNonNull(response.body()).string();
-                    NewsResponse newsResponse = (new Gson()).fromJson(json, NewsResponse.class);
-                    if (newsResponse != null) {
-                        try {
-                            newsResponse.process();
-                            newsList.clear();
-                            newsList.addAll(newsResponse.data);
-                            myAdaptor.notifyDataSetChanged();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                } catch (IOException e) {
+                    newsResponse.process();
+                    newsList.clear();
+                    newsList.addAll(newsResponse.data);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        };
-        Thread t = new Thread(r);
-        t.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         myAdaptor = new MyAdaptor(newsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(MyApplication.context));
         recyclerView.setAdapter(myAdaptor);
     }
-
-
 }
