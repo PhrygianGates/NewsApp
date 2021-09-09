@@ -52,3 +52,11 @@ class HistoryLog extends LitePalSupport {
         this.historyID = historyID;
     }
 }
+
+class MarkLog extends LitePalSupport {
+    long id;
+    long markID;
+    public MarkLog(long markID) {
+        this.markID = markID;
+    }
+}

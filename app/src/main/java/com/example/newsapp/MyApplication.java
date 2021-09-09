@@ -13,11 +13,13 @@ import java.util.List;
 public class MyApplication extends LitePalApplication {
     static Context context;
     static HistoryFragment historyFragment;
+    static MarkFragment markFragment;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = getBaseContext();
         historyFragment = new HistoryFragment();
+        markFragment = new MarkFragment();
     }
 }
