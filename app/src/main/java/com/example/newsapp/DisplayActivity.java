@@ -48,7 +48,7 @@ public class DisplayActivity extends AppCompatActivity {
         word = getIntent().getStringExtra("word=");
 
         Thread t = new Thread(() -> {
-            System.out.println("here!");
+            //System.out.println("here!");
             Request request = (new Request.Builder()).url("https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=" + startTime + "&endDate="
                     + endTime + "&words=" + word + "&categories=" + category).build();
             try {

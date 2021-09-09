@@ -50,6 +50,7 @@ public class MyAdaptor extends RecyclerView.Adapter<MyAdaptor.MyViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                news.save();
                 Intent intent = new Intent(MyApplication.context, DetailActivity.class);
                 News currentNews = newsList.get(holder.getAdapterPosition());
                 intent.putExtra("content=", currentNews.content);
@@ -59,6 +60,10 @@ public class MyAdaptor extends RecyclerView.Adapter<MyAdaptor.MyViewHolder> {
                 intent.putExtra("image=", currentNews.image);
                 intent.putExtra("id=", currentNews.id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (LitePal.where("historyID=?", String.valueOf(news.id)).find(HistoryLog.class).isEmpty()) {
+                    HistoryLog log = new HistoryLog(news.id);
+                    log.save();
+                }
                 startActivity(MyApplication.context, intent, null);
             }
         });

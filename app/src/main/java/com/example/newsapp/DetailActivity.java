@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 
@@ -31,11 +32,15 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = findViewById(R.id.detail_tool_bar);
+        setSupportActionBar(toolbar);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         TextView textViewContent = findViewById(R.id.content);
         TextView textViewTitle = findViewById(R.id.title);
         TextView textViewPublishTime = findViewById(R.id.publishTime);
         TextView textViewPublisher = findViewById(R.id.publisher);
+        TextView realTitle = findViewById(R.id.detail_real_title);
         String content = getIntent().getStringExtra("content=");
         String title = getIntent().getStringExtra("title=");
         String publishTime = getIntent().getStringExtra("publishTime=");
@@ -44,6 +49,8 @@ public class DetailActivity extends AppCompatActivity {
         textViewTitle.setText(title);
         textViewPublishTime.setText(publishTime);
         textViewPublisher.setText(publisher);
+        setTitle("");
+        realTitle.setText(publisher);
 
         ImageView saveIcon = findViewById(R.id.save_icon);
         long id = getIntent().getLongExtra("id=", -1);
