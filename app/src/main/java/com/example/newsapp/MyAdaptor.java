@@ -57,6 +57,7 @@ public class MyAdaptor extends RecyclerView.Adapter<MyAdaptor.MyViewHolder> {
                 intent.putExtra("publishTime=", currentNews.publishTime);
                 intent.putExtra("publisher=", currentNews.publisher);
                 intent.putExtra("image=", currentNews.image);
+                intent.putExtra("id=", currentNews.id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(MyApplication.context, intent, null);
             }

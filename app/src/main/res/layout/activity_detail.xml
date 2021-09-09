@@ -10,20 +10,35 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title"
-            android:text="飓风“艾达”即将登陆美国墨西哥湾沿岸 救援物资已发往相关地区"
-            android:gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textColor="#222222"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="80dp">
-        </TextView>
+            <TextView
+                android:id="@+id/title"
+                android:text="飓风“艾达”即将登陆美国墨西哥湾沿岸 救援物资已发往相关地区"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:textColor="#222222"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_width="340dp"
+                android:layout_height="match_parent">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/save_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/title"
+                android:paddingRight="20dp"
+                android:src="@drawable/ic_save">
+
+            </ImageView>
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
