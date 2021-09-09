@@ -29,6 +29,13 @@
     </androidx.appcompat.widget.Toolbar>
 
 
+    <VideoView
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </VideoView>
+
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -98,6 +105,7 @@
                 android:background="#6C6B6B"/>
 
             <HorizontalScrollView
+                android:id="@+id/scroll_view"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="30dp"

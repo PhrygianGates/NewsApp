@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,21 +68,22 @@ public class DetailActivity extends AppCompatActivity {
 
         LinearLayout llGroup = (LinearLayout) findViewById(R.id.ll_group);
         String image = getIntent().getStringExtra("image=");
-        List<String> images;
-        if (image.length() == 0) {
-            images = new ArrayList<>();
-            images.add("https://th.bing.com/th/id/OIP.F0l-uBZ7P7BSiifS_ZIRRQAAAA?pid=ImgDet&rs=1");
+        List<String> images = new ArrayList<>();
+        if (image.length() == 0 || !NetworkUtil.isNetworkAvailable(MyApplication.context)) {
+            ((ViewGroup)llGroup.getParent()).removeView(llGroup);
+            HorizontalScrollView horizontalScrollView = findViewById(R.id.scroll_view);
+            ((ViewGroup)horizontalScrollView.getParent()).removeView(horizontalScrollView);
         } else {
             images = Arrays.asList(image.split(", "));
-        }
-        llGroup.removeAllViews();  //clear linearlayout
-        for (int i = 0; i < images.size(); i++) {
-            ImageView imageView = new ImageView(this);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            Glide.with(MyApplication.context).load(images.get(i)).into(imageView);
-            imageView.setAdjustViewBounds(true);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            llGroup.addView(imageView);
+            llGroup.removeAllViews();  //clear linearlayout
+            for (int i = 0; i < images.size(); i++) {
+                ImageView imageView = new ImageView(this);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                Glide.with(MyApplication.context).load(images.get(i)).into(imageView);
+                imageView.setAdjustViewBounds(true);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                llGroup.addView(imageView);
+            }
         }
         saveIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +105,16 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+        VideoView videoView = findViewById(R.id.video);
+        String video = getIntent().getStringExtra("video=");
+        if (video == null || video.length() == 0 || !NetworkUtil.isNetworkAvailable(MyApplication.context)) {
+            ((ViewGroup)videoView.getParent()).removeView(videoView);
+        } else {
+            videoView.setVideoPath(video);
+            MediaController mediaController = new MediaController(this);
+            videoView.setMediaController(mediaController);
+        }
+
     }
 
     @Override

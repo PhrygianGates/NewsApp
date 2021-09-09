@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="db_news_app" />
-    <version value="7" />
+    <version value="8" />
     <list>
         <mapping class="com.example.newsapp.News" />
         <mapping class="com.example.newsapp.HistoryLog" />

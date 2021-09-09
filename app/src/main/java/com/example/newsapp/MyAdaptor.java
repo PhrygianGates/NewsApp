@@ -59,6 +59,7 @@ public class MyAdaptor extends RecyclerView.Adapter<MyAdaptor.MyViewHolder> {
                 intent.putExtra("publisher=", currentNews.publisher);
                 intent.putExtra("image=", currentNews.image);
                 intent.putExtra("id=", currentNews.id);
+                intent.putExtra("video=", currentNews.video);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 if (LitePal.where("historyID=?", String.valueOf(news.id)).find(HistoryLog.class).isEmpty()) {
                     HistoryLog log = new HistoryLog(news.id);

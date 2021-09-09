@@ -15,6 +15,7 @@ class News extends LitePalSupport {
     String image;
     String content;
     String category;
+    String video;
 
     List<String> images;
     public void process() {
