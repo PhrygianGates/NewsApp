@@ -42,7 +42,11 @@ public class MyAdaptor extends RecyclerView.Adapter<MyAdaptor.MyViewHolder> {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(news.publisher).append("    ").append(news.publishTime);
         holder.description.setText(stringBuilder.toString());
-        Glide.with(MyApplication.context).load(news.images.get(0)).into(holder.image);
+        if (news.images.get(0).length() == 0) {
+            Glide.with(MyApplication.context).load("https://th.bing.com/th/id/OIP.F0l-uBZ7P7BSiifS_ZIRRQAAAA?pid=ImgDet&rs=1").into(holder.image);
+        } else {
+            Glide.with(MyApplication.context).load(news.images.get(0)).into(holder.image);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -8,9 +8,16 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SearchActivity extends AppCompatActivity {
     String startTime;
@@ -86,6 +93,25 @@ public class SearchActivity extends AppCompatActivity {
                 endTime = String.valueOf(endTimeEditText.getText());
                 category = String.valueOf(categoryEditText.getText());
                 word = String.valueOf(wordEditText.getText());
+
+                String pattern1 = "\\d{4}-\\d{2}-\\d{2}";
+                Pattern r = Pattern.compile(pattern1);
+                Matcher m = r.matcher(startTime);
+
+                if (!m.find() && !startTime.equals("")) {
+                    Toast.makeText(MyApplication.context, "您输入了错误的起始时间", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                m = r.matcher(endTime);
+                if (!m.find() && !endTime.equals("")) {
+                    Toast.makeText(MyApplication.context, "您输入了错误的结束时间", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                List<String> categories = new ArrayList<>(Arrays.asList("娱乐", "军事", "教育", "文化", "健康", "财经", "体育", "汽车", "科技", "社会"));
+                if (!categories.contains(category) && !category.equals("")) {
+                    Toast.makeText(MyApplication.context, "您输入了错误的新闻类别", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 Intent intent = new Intent(MyApplication.context, DisplayActivity.class);
                 intent.putExtra("startTime=", startTime);

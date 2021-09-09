@@ -42,8 +42,9 @@ public class DetailActivity extends AppCompatActivity {
         LinearLayout llGroup = (LinearLayout) findViewById(R.id.ll_group);
         String image = getIntent().getStringExtra("image=");
         List<String> images;
-        if (image == "") {
+        if (image.length() == 0) {
             images = new ArrayList<>();
+            images.add("https://th.bing.com/th/id/OIP.F0l-uBZ7P7BSiifS_ZIRRQAAAA?pid=ImgDet&rs=1");
         } else {
             images = Arrays.asList(image.split(", "));
         }
