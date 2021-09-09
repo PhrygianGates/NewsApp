@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,19 +29,21 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HomeFragment extends Fragment {
 
     //娱乐、军事、教育、文化、健康、财经、体育、汽车、科技、社会
-    List<String> newsTypeList = new ArrayList<>(Arrays.asList("娱乐", "军事", "财经", "科技"));
-    List<NewsFragment> fragmentList = new ArrayList<>();
+    List<NewsFragment> fragmentList;
     TabLayout tabLayout;
     ViewPager viewPager;
     EditText editText;
+    ImageView more;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        fragmentList = new ArrayList<>();
         tabLayout = view.findViewById(R.id.news_tab_layout);
         viewPager = view.findViewById(R.id.news_view_pager);
         editText = view.findViewById(R.id.home_edit_text);
+        more = view.findViewById(R.id.more);
         return view;
     }
 
@@ -48,10 +51,9 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        for (String newsType : newsTypeList) {
+        for (String newsType : MyApplication.chosen) {
             fragmentList.add(new NewsFragment(newsType));
         }
-        viewPager.setOffscreenPageLimit(newsTypeList.size());
         viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
 
@@ -63,6 +65,24 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyApplication.context, EditActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fragmentList.clear();
+        for (String newsType : MyApplication.chosen) {
+            fragmentList.add(new NewsFragment(newsType));
+        }
+        viewPager.getAdapter().notifyDataSetChanged();
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private class MyAdapter extends FragmentPagerAdapter {
@@ -85,7 +105,7 @@ public class HomeFragment extends Fragment {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return newsTypeList.get(position);
+            return MyApplication.chosen.get(position);
         }
     }
 }

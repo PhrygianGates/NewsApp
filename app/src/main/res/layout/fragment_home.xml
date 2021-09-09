@@ -46,18 +46,36 @@
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@id/icon_search"
-                        android:background="#F4F4F4"></EditText>
+                        android:background="#F4F4F4">
+                    </EditText>
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
 
         </androidx.appcompat.widget.Toolbar>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/news_tab_layout"
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="40dp">
-        </com.google.android.material.tabs.TabLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/news_tab_layout"
+                android:layout_width="360dp"
+                android:layout_height="40dp">
+            </com.google.android.material.tabs.TabLayout>
+
+            <ImageView
+                android:id="@+id/more"
+                android:layout_toRightOf="@id/news_tab_layout"
+                android:paddingRight="10dp"
+                android:src="@drawable/ic_more"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ImageView>
+
+        </RelativeLayout>
+
 
 
 

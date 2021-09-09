@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detail_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/purple_700"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="您已经选择的标签">
+    </TextView>
+
+    <com.example.newsapp.DragGridLayout
+        android:id="@+id/drag_layout_1"
+        android:layout_width="match_parent"
+        android:rowCount="4"
+        android:columnCount="4"
+        android:layout_height="300dp">
+    </com.example.newsapp.DragGridLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#6C6B6B"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="您未选择的标签">
+    </TextView>
+
+    <com.example.newsapp.DragGridLayout
+        android:id="@+id/drag_layout_2"
+        android:layout_width="match_parent"
+        android:rowCount="4"
+        android:columnCount="4"
+        android:layout_height="300dp">
+    </com.example.newsapp.DragGridLayout>
+
+</LinearLayout>

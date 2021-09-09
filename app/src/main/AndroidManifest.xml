@@ -24,6 +24,7 @@
         <activity android:name=".DetailActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".DisplayActivity"/>
+        <activity android:name=".EditActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
