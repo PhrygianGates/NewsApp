@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -54,6 +55,7 @@ public class HomeFragment extends Fragment {
         for (String newsType : MyApplication.chosen) {
             fragmentList.add(new NewsFragment(newsType));
         }
+        viewPager.setOffscreenPageLimit(fragmentList.size());
         viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
 
@@ -74,18 +76,15 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
-        fragmentList.clear();
-        for (String newsType : MyApplication.chosen) {
-            fragmentList.add(new NewsFragment(newsType));
-        }
         viewPager.getAdapter().notifyDataSetChanged();
-        tabLayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(fragmentList.size());
     }
 
-    private class MyAdapter extends FragmentPagerAdapter {
+    private class MyAdapter extends FragmentStatePagerAdapter {
 
         public MyAdapter(@NonNull FragmentManager fm) {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -107,5 +106,11 @@ public class HomeFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             return MyApplication.chosen.get(position);
         }
+
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            return POSITION_NONE;
+        }
+
     }
 }

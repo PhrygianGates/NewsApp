@@ -56,7 +56,13 @@ public class EditActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-
+            for (NewsFragment newsFragment : MyApplication.homeFragment.fragmentList) {
+                newsFragment.onDestroy();
+            }
+            MyApplication.homeFragment.fragmentList.clear();
+            for (String newsType : MyApplication.chosen) {
+                MyApplication.homeFragment.fragmentList.add(new NewsFragment(newsType));
+            }
             finish();
         }
         return super.onOptionsItemSelected(item);

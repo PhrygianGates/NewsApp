@@ -40,6 +40,7 @@ public class NewsFragment extends Fragment {
     NewsAdaptor newsAdaptor = new NewsAdaptor(newsList, this);
     boolean isLoading = false;
 
+
     public NewsFragment(String category) {
         super();
         this.category = category;
@@ -53,6 +54,7 @@ public class NewsFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.news_refresh);
         return view;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
