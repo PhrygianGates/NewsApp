@@ -23,7 +23,9 @@ import com.google.gson.Gson;
 import org.litepal.LitePal;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -205,7 +207,13 @@ public class NewsFragment extends Fragment {
 
     private List<News> getDataFromNetwork() {
         List<News> list = null;
-        Request request = (new Request.Builder()).url("https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=&endDate=2021-09-07&words=&categories=" + category).build();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        String dateString = simpleDateFormat.format(date);
+        System.out.println(dateString);
+
+
+        Request request = (new Request.Builder()).url("https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=&endDate=" + dateString + "&words=&categories=" + category).build();
         try {
             Response response = (new OkHttpClient()).newCall(request).execute();
             String json = Objects.requireNonNull(response.body()).string();

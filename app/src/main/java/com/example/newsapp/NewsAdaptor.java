@@ -69,7 +69,10 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
             stringBuilder.append(news.publisher).append("    ").append(news.publishTime);
             ((NewsViewHolder) holder).description.setText(stringBuilder.toString());
             if (holder instanceof OneImageViewHolder) {
-                Glide.with(MyApplication.context).load(news.images.get(0)).into(((OneImageViewHolder) holder).image);
+                if (news.images == null || news.images.size() == 0) {
+                    Glide.with(MyApplication.context).load("https://th.bing.com/th/id/OIP.F0l-uBZ7P7BSiifS_ZIRRQAAAA?pid=ImgDet&rs=1").into(((OneImageViewHolder) holder).image);
+                }
+                else Glide.with(MyApplication.context).load(news.images.get(0)).into(((OneImageViewHolder) holder).image);
             } else if (holder instanceof ThreeImagesViewHolder) {
                 Glide.with(MyApplication.context).load(news.images.get(0)).into(((ThreeImagesViewHolder) holder).image1);
                 Glide.with(MyApplication.context).load(news.images.get(1)).into(((ThreeImagesViewHolder) holder).image2);
@@ -89,6 +92,11 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
                     intent.putExtra("video=", currentNews.video);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     if (LitePal.where("historyID=?", String.valueOf(news.id)).find(HistoryLog.class).isEmpty()) {
+                        HistoryLog log = new HistoryLog(news.id);
+                        log.save();
+                        ((NewsViewHolder) holder).title.setTextColor(Color.GRAY);
+                    } else {
+                        LitePal.deleteAll(HistoryLog.class, "historyID=?", String.valueOf(news.id));
                         HistoryLog log = new HistoryLog(news.id);
                         log.save();
                         ((NewsViewHolder) holder).title.setTextColor(Color.GRAY);
@@ -132,10 +140,10 @@ public class NewsAdaptor extends RecyclerView.Adapter<NewsAdaptor.BaseViewHolder
             return FOOTER_VIEW_TYPE;
         } else {
             News news = newsList.get(position);
-            if (news.images.size() >= 3) {
-                return THREE_IMAGES_VIEW_TYPE;
-            } else {
+            if (news.images == null || news.images.size() < 3) {
                 return ONE_IMAGE_VIEW_TYPE;
+            } else {
+                return THREE_IMAGES_VIEW_TYPE;
             }
         }
     }
