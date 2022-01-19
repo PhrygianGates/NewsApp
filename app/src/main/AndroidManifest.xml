@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.newsapp">
+    package="com.java.xiongzhicheng">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
-        android:name=".MyApplication"
+        android:name="com.java.xiongzhicheng.MyApplication"
         android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
         <activity
-            android:name=".MainActivity"
+            android:name="com.java.xiongzhicheng.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,10 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity"/>
-        <activity android:name=".SearchActivity"/>
-        <activity android:name=".DisplayActivity"/>
-        <activity android:name=".EditActivity"/>
+        <activity android:name="com.java.xiongzhicheng.DetailActivity"/>
+        <activity android:name="com.java.xiongzhicheng.SearchActivity"/>
+        <activity android:name="com.java.xiongzhicheng.DisplayActivity"/>
+        <activity android:name="com.java.xiongzhicheng.EditActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

@@ -25,13 +25,13 @@
         android:text="您已经选择的标签">
     </TextView>
 
-    <com.example.newsapp.DragGridLayout
+    <com.java.xiongzhicheng.DragGridLayout
         android:id="@+id/drag_layout_1"
         android:layout_width="match_parent"
         android:rowCount="4"
         android:columnCount="4"
         android:layout_height="300dp">
-    </com.example.newsapp.DragGridLayout>
+    </com.java.xiongzhicheng.DragGridLayout>
 
     <View
         android:layout_width="match_parent"
@@ -48,12 +48,12 @@
         android:text="您未选择的标签">
     </TextView>
 
-    <com.example.newsapp.DragGridLayout
+    <com.java.xiongzhicheng.DragGridLayout
         android:id="@+id/drag_layout_2"
         android:layout_width="match_parent"
         android:rowCount="4"
         android:columnCount="4"
         android:layout_height="300dp">
-    </com.example.newsapp.DragGridLayout>
+    </com.java.xiongzhicheng.DragGridLayout>
 
 </LinearLayout>
